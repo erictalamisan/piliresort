@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstarp CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand span{
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .nav-link{
+            font-size: 20px;
+            color:var(--black);
+        }
+
+        .nav-link:hover{
+            color:var(--main-color);
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-5">
+        <div class="container-fluid navbar-container pl-5">
+          <a class="navbar-brand mr-auto ml-5" href="home.php">
+            <img src="../images/favicon.jpg" alt="Logo"> <span>Pili Beach Resort</span>
+          </a>
+  
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="home.php">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="book.php">Book</a>
+              </li>
+            </ul>
+          </div>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                        <strong><?php echo $name; ?></strong>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="../signout.php">Sign Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container p-3 user-cart bg-light mt-5">
+        <div class="cart">
+    <!-- Reservation Table -->
+    <div class="container table-responsive bg-light my-4 px-3 py-4" style="border-radius: 6px; "> 
+      <h2 class="pl-3">Reservations</h2>
+      <table class="table table-sm table-striped text-center" id="sampleTable">
+          <thead class="thead-dark">
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Room Name</th>
+                  <th scope="col">Number of Reservation</th>
+                  <th scope="col">Number of Nights:</th>
+                  <th scope="col">Check In</th>
+                  <th scope="col">Check Out</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Amount</th>
+              </tr>
+          </thead>
+          <tbody>
+
+              <?php
+
+              $get_data = "SELECT * FROM room order by 1 desc";
+              $run_data = mysqli_query($conn, $get_data);
+              $searchResult = mysqli_num_rows($run_data);
+
+
+              $i = 0;
+              while ($row = mysqli_fetch_assoc($run_data)) {
+                  $no = ++$i;
+                  $id = $row['id'];
+                  $room_name = $row['room_name'];
+                  $description_1 = $row['description_1'];
+                  $description_2 = $row['description_2'];
+                  $price = $row['price'];
+                  $check_in = $row['check_in'];
+                  $check_out = $row['check_out'];
+                  $status = $row['booking_status'];
+
+
+              ?>
+                  <tr>
+                      <td scope="row"><?php echo $no; ?></td>
+                      <td><?php echo $room_name; ?></td>
+                      <td><?php echo $description_1 . "<br>" . $description_2; ?></td>
+                      <td>Php <?php echo $price; ?></td>
+                      <td><?php echo $status; ?></td>
+                      <td style="display: flex; gap: 5px; justify-content: center;">
+                          <span class="action-icons py-5">
+                              <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#updateModal<?php echo $id; ?>">
+                                  <i class='bx bxs-pencil'></i>
+                              </a>
+                          </span>
+                          <span class="action-icons py-5">
+                              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                                  <i class='bx bxs-trash-alt'></i>
+                              </a>
+                          </span>
+                      </td>
+                  </tr>
+              <?php
+              }
+              ?>
+          </tbody>
+      </table>
+  </div>
+  <h5>Total Amount: </h5>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<?php
+
+               $get_data = "SELECT * FROM reservation order by 1 desc WHERE reverver_name = $name";
+               $run_data = mysqli_query($conn, $get_data);
+ 
+               $i = 0;
+               while ($row = mysqli_fetch_assoc($run_data)) {
+                   $no = ++$i;
+                   $id = $row['id'];
+                   $reserver_name = $row['reserver_name'];
+                   $reservation_number = $row['reservation_number'];
+                   $number_nights = $row['number_nights'];
+                   $price = $row['price'];
+                   $check_in = $row['check_in'];
+                   $check_out = $row['check_out'];
+                   $room_name = $row['room_name'];
+                  
+              ?>
+                  <tr>
+                      <td scope="row"><?php echo $no; ?></td>
+                      <td scope="row"><?php echo $room_name; ?></td>
+                      <td scope="row"><?php echo $reservation_number; ?></td>
+                      <td scope="row"><?php echo $number_nights; ?></td>
+                      <td scope="row"><?php echo $check_in; ?></td>
+                      <td scope="row"><?php echo $check_out; ?></td>
+                      <td scope="row"><?php echo $price; ?></td>
+                  </tr>
+                  <?php
+              }
+              ?>

@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #d4d4d4;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    left: -30px;
+}
+
+.navbar-brand img {
+    width: 50px;
+}
+
+.navbar-brand span{
+    font-size: 24px;
+    font-weight: 400;
+ }
+ 
+ .nav-link{
+    font-size: 20px;
+    color:var(--black);
+ }
+ 
+ .nav-link:hover{
+    color:var(--main-color);
+ }
